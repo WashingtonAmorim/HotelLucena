@@ -1,0 +1,92 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Consulta do Usuário</h2>
+        <br/>
+        <center>
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputLabel value="Código:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaUsuariosBean.usuarios.codUsuario}" />
+
+                    <h:outputLabel value="Nome:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaUsuariosBean.usuarios.nomeUsuario}" />
+
+                    <h:outputLabel value="Telefone:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaUsuariosBean.usuarios.contatoUsuario}" />
+
+                    <h:outputLabel value="Tipo:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaUsuariosBean.usuarios.tipoUsuariol}" />
+
+                    <br/>
+
+                    <p:dataTable var="lista" value="#{reservasBean.buscarReservasUsuario(consultaUsuariosBean.usuarios.codUsuario)}"
+                                 id="tabelaActivity" emptyMessage="Nenhum registro encontrado"
+                                 paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                        <p:column headerText="Código" sortBy="#{lista.codigoReserva}" filterBy="#{lista.codigoReserva}">
+
+                            <h:outputText value="#{lista.codigoReserva}" />
+
+                        </p:column>
+
+                        <p:column headerText="Cliente" sortBy="#{lista.usuarioscodUsuario.nomeUsuario}" filterBy="#{lista.usuarioscodUsuario.nomeUsuario}">
+
+                            <h:outputText value="#{lista.usuarioscodUsuario.nomeUsuario}" />
+
+                        </p:column>
+
+                        <p:column headerText="Data Entrada" sortBy="#{lista.dataEntrada}" filterBy="#{lista.dataEntrada}">
+
+                            <h:outputText value="#{lista.dataEntrada}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="Data Saída" sortBy="#{lista.dataSaida}" filterBy="#{lista.dataSaida}">
+                            <center>
+                                <h:outputText value="#{lista.dataSaida}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Número de Hospedes" sortBy="#{lista.numeroHospedes}" filterBy="#{lista.numeroHospedes}">
+
+                            <h:outputText value="#{lista.numeroHospedes}" />
+
+                        </p:column>
+
+                        <p:column headerText="Apartamento" sortBy="#{lista.apartamentocodigoApartamento.codigoApartamento}" filterBy="#{lista.apartamentocodigoApartamento.codigoApartamento}">
+
+                            <h:outputText value="#{lista.apartamentocodigoApartamento.codigoApartamento}" />
+
+                        </p:column>
+
+                        <p:column headerText="Valor" sortBy="#{lista.valorPago}" filterBy="#{lista.valorPago}">
+
+                            <h:outputText value="#{lista.camaExtra(lista)}" >
+                                <f:convertNumber currencyCode="BRL" type="currency" />
+                            </h:outputText>
+
+                        </p:column>
+
+                        <p:column headerText="Estatus" sortBy="#{lista.status}" filterBy="#{lista.status}">
+
+                            <h:outputText value="#{lista.status}" />
+
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>

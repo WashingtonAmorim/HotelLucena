@@ -1,0 +1,48 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Consultar Usuário</h2>
+        <br/>
+
+        <h:form>
+            <p:dataTable var="lista" value="#{usuariosBean.usuarioss}"
+                         id="tabelaAgent" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                <p:column headerText="Código" sortBy="#{lista.codUsuario}" filterBy="#{lista.codUsuario}">
+
+                    <h:outputText value="#{lista.codUsuario}" />
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{lista.nomeUsuario}" filterBy="#{lista.nomeUsuario}">
+
+                    <h:outputText value="#{lista.nomeUsuario}" />
+
+                </p:column>
+                <p:column headerText="Contato" sortBy="#{lista.contatoUsuario}" filterBy="#{lista.contatoUsuario}">
+
+                    <h:outputText value="#{lista.contatoUsuario}" />
+
+                </p:column>
+                <p:column headerText="Tipo" sortBy="#{lista.tipoUsuariol}" filterBy="#{lista.tipoUsuariol}">
+
+                    <h:outputText value="#{lista.tipoUsuariol}" />
+
+                </p:column>
+                <p:column>
+                    <p:commandButton title="Details" 
+                                     value="Details" 
+                                     icon="ui-icon-zoomin" 
+                                     action="/faces/relatorio_usuario.xhtml?faces-redirect=true"
+                                     ajax="true">
+                        <f:setPropertyActionListener value="#{lista}" target="#{consultaUsuariosBean.usuarios}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

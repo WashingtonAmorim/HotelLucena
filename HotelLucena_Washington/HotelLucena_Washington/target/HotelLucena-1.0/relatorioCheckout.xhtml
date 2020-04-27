@@ -1,0 +1,63 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Relatório Check out</h2>
+        <br/>
+        <center>
+            <h:form>
+                <p:messages id="messages" showDetail="true" closable="true" />
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputLabel value="Número da Reserva:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.codigoReserva}" />
+
+                    <h:outputLabel value="Código do Usuário:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.usuarioscodUsuario.codUsuario}" />
+
+                    <h:outputLabel value="Nome:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.usuarioscodUsuario.nomeUsuario}" />
+
+                    <h:outputLabel value="Número do Apartamento:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.apartamentocodigoApartamento.codigoApartamento}" />
+
+                    <h:outputLabel value="Tipo do Apartamento:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.apartamentocodigoApartamento.categoriacodigoCategoria.tipoCategoria}" />
+
+                    <h:outputLabel value="Diária:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.apartamentocodigoApartamento.categoriacodigoCategoria.valorDiaria}" >
+                        <f:convertNumber currencyCode="BRL" type="currency" />
+                    </h:outputText>
+
+                    <h:outputLabel value="Entrada:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.dataEntrada}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>       
+
+                    <h:outputLabel value="Saída:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.dataSaida}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>       
+
+                    <h:outputLabel value="Número de Hospedes:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.numeroHospedes}" />                    
+
+                    <h:outputLabel value="Valor Pago:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.camaExtra(consultaReservasBean.reservas)}" >
+                        <f:convertNumber currencyCode="BRL" type="currency" />
+                    </h:outputText>
+
+                    <h:outputLabel value="Tempo de Permanência:" styleClass="panelGridLabel" />
+                    <h:outputText value="#{consultaReservasBean.reservas.permanencia(consultaReservasBean.reservas)}" />                    
+
+                    <p:commandButton value="Confirmar"  
+                                     actionListener="#{consultaReservasBean.checkout}" />
+                    <br/>
+
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>

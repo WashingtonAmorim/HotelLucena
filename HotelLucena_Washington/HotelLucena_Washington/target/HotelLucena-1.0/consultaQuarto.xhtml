@@ -1,0 +1,38 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Consultar Quarto</h2>
+        <br/>
+
+        <h:form>
+            <p:dataTable var="lista" value="#{apartamentosBean.apartamentos}"
+                         id="tabelaAgent" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+                              
+                <p:column headerText="Código" sortBy="#{lista.codigoApartamento}" filterBy="#{lista.codigoApartamento}">
+
+                    <h:outputText value="#{lista.codigoApartamento}" />
+                </p:column>
+                <p:column headerText="Tipo" sortBy="#{lista.categoriacodigoCategoria.tipoCategoria}" filterBy="#{lista.categoriacodigoCategoria.tipoCategoria}">
+
+                    <h:outputText value="#{lista.categoriacodigoCategoria.tipoCategoria}" />
+
+                </p:column>
+                <p:column>
+                    <p:commandButton title="Details" 
+                                     value="Details" 
+                                     icon="ui-icon-zoomin" 
+                                     action="/faces/relatorio_apartamento.xhtml?faces-redirect=true"
+                                     ajax="true">
+                        <f:setPropertyActionListener value="#{lista}" target="#{consultaApartamentosBean.apartamento}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

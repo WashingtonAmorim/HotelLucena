@@ -1,0 +1,107 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciamento de Apartamentos</h2>
+        <br/>
+        <h:form id="formPrincipal">
+
+            <div align="center">
+                <p:dataTable var="lista" value="#{apartamentosBean.apartamentos}"
+                             id="tabelaActivity" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="Apartamento" sortBy="#{lista.codigoApartamento}" filterBy="#{lista.codigoApartamento}">
+
+                        <h:outputText value="#{lista.codigoApartamento}" />
+
+                    </p:column>
+
+                    <p:column headerText="Categoria" sortBy="#{lista.categoriacodigoCategoria.tipoCategoria}" filterBy="#{lista.categoriacodigoCategoria.tipoCategoria}">
+
+                        <h:outputText value="#{lista.categoriacodigoCategoria.tipoCategoria}" />
+
+                    </p:column>
+
+                    <p:column headerText="Opções" exportable="false">
+                        <center>
+                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
+                                <f:setPropertyActionListener target="#{apartamentosBean.apartamento}"
+                                                             value="#{lista}" />
+                            </p:commandButton>
+
+                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{apartamentosBean.apartamento}"
+                                                             value="#{lista}" />
+                            </p:commandButton> 
+                        </center>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+            <br/>
+            <p:column>
+                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
+                </p:commandButton> 
+            </p:column>
+            <div align="center">
+                <h3>Exportar dados da página</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabelaActivity" fileName="activitys" postProcessor="#{apartamentosBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabelaActivity" fileName="activitys" preProcessor="#{apartamentosBean.preProcessPDF}" />
+                </h:commandLink>
+
+
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabelaActivity" fileName="activitys" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabelaActivity" fileName="activitys" />
+                </h:commandLink>
+            </div>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+
+            <p:dialog header="Novo" widgetVar="record" modal="false" focus="name">
+
+
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    Apartamento:
+                    <p:inputText id="name" value="#{apartamentosBean.apartamento.codigoApartamento}" />
+                    Categoria:
+                    <p:selectOneMenu id="resp" value="#{apartamentosBean.apartamento.categoriacodigoCategoria}" converter="categoriaConverter">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{categoriasBean.categorias}" var="respname" itemLabel="#{respname.tipoCategoria}" itemValue="#{respname}" />
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <br/>
+                <p:commandButton value="Salvar"  
+                                 actionListener="#{apartamentosBean.record}" onclick="record.hide()" alt="Record"/> 
+            </p:dialog>
+
+            <p:dialog header="Delete" widgetVar="remove" modal="false"> 
+                Você tem certeza?
+                <p:commandButton value="Deletar"  
+                                 actionListener="#{apartamentosBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
